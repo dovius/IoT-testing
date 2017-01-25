@@ -1,6 +1,7 @@
 from datetime import datetime
 from flask import Flask, render_template, json, request
 from flask.ext.mysql import MySQL
+import config
 
 mysql = MySQL()
 app = Flask(__name__)
