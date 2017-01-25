@@ -9,6 +9,7 @@ import config
 
 
 
+
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = config.dbUser
