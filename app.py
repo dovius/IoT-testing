@@ -3,6 +3,8 @@ from flask import Flask, render_template, json, request
 from flask.ext.mysql import MySQL
 import config
 
+
+
 mysql = MySQL()
 app = Flask(__name__)
 app.config['MYSQL_DATABASE_USER'] = config.dbUser
