@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>NVR status</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" href="http://www.androidpolice.com/wp-content/uploads/2015/05/nexus2cee_tinyCam-Thumb.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -13,7 +13,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
         /* Space out content a bit */
@@ -81,43 +80,31 @@
             margin-top: 28px;
         }
 
-        a:link {
-            color: inherit;
-        }
-
-        a:visited {
-            color: inherit;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
         /*!* Responsive: Portrait tablets and up *!*/
         /*@media screen and (min-width: 768px) {*/
-        /*!* Remove the padding we set earlier *!*/
-        /*.header,*/
-        /*.marketing,*/
-        /*.footer {*/
-        /*padding-right: 0;*/
-        /*padding-left: 0;*/
-        /*}*/
+            /*!* Remove the padding we set earlier *!*/
+            /*.header,*/
+            /*.marketing,*/
+            /*.footer {*/
+                /*padding-right: 0;*/
+                /*padding-left: 0;*/
+            /*}*/
 
-        .container {
-            max-width: 730px;
-        }
+            .container {
+                max-width: 730px;
+            }
 
-        /*.container {*/
-        /*background-color: black;*/
-        /*}*/
+            /*.container {*/
+                /*background-color: black;*/
+            /*}*/
 
-        /*.header {*/
-        /*margin-bottom: 30px;*/
-        /*}*/
+            /*.header {*/
+                /*margin-bottom: 30px;*/
+            /*}*/
 
-        /*.jumbotron {*/
-        /*border-bottom: 0;*/
-        /*}*/
+            /*.jumbotron {*/
+                /*border-bottom: 0;*/
+            /*}*/
         /*}*/
 
         @media only screen and (max-width: 800px) {
@@ -128,6 +115,7 @@
                 padding-right: 0;
                 padding-left: 0;
             }
+
 
             .container {
                 /*background-color: black;*/
@@ -145,59 +133,47 @@
     </style>
 </head>
 <body>
-
 <div class="container">
-{#    <nav class="navbar navbar-default">#}
-{#        <div class="container-fluid">#}
-{#            <div class="navbar-header">#}
-{#                <a class="navbar-brand" href="/">NVR</a>#}
-{#            </div>#}
-{#            <ul class="nav navbar-nav">#}
-{#                <li><a href="#">Kamerų sąrašas</a></li>#}
-{#                <li><a href="/insert">Pridėti kamerą</a></li>#}
-{#                <li><a href="#">Atsijungti</a></li>#}
-{#            </ul>#}
-{#        </div>#}
-{#    </nav>#}
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">NVR</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Kamerų sąrašas</a></li>
+                <li><a href="/insert">Pridėti kamerą</a></li>
+                <li><a href="#">Atsijungti</a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="row">
         <div class="col">
+            <h1>{{info.name}}</h1>
             <table class="table table-inverse">
                 <thead>
                 <tr>
-                    <th>Vieta</th>
                     <th>Laikas</th>
-                    <th>IP adresas</th>
+                    <th>Statusas</th>
                 </tr>
                 </thead>
-                {% for device in devices %}
+                <tbody>
+
+                {% for log in info.logs %}
                     <tr>
-                        <td {% if not device.status %} style="color:red" {% endif %}>
-                            <a href="/nvr/{{ device.id }}">{{ device.name }}</a>  <a href="/delete/{{ device.id }}" style="color: black"><i class="fa fa-remove"></i></a>
-                        </td>
-                        <td {% if not device.status %} style="color:red" {% endif %}>
-                            {% if device.offTimeDiffDays > 565 %}
-                                ---
+
+                        <td {% if not log[1] %} style="color:red" {% endif %}>{{log[0]}}</td>
+                        <td {% if not log[1] %} style="color:red" {% endif %}>{% if log[1] %}
+                                Isijunge
                             {% else %}
-                                {{ device.offTimeDiffDays }}d {{ device.offTimeDiffHours }}h
+                                Issiunge
                             {% endif %}
                         </td>
-                        <td><a href="http://{{ device.ip }}"
-                               style="text-decoration: underline; color:black"> {{ device.ip }} </a></td>
+
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
-            <table class="table table-inverse">
-                <tr>
-                    <td>{{ info.onDevices }} / {{ info.allDevices }} veikiantys NVR</td>
-                    <td>{{ info.initTime }} pradzios laikas</td>
-                    <td>{{ info.runningTimeDays }}d {{ info.runningTimeHours }}h programa vykdoma</td>
-                </tr>
-                <tr>
-                    <td><a href="/ref">Atnaujinti</a></td>
-                    <td>{{ info.refreshTime }} paskutinis atnaujinimas</td>
-                    <td/>
-                </tr>
-            </table>
+            <h4><a href="/">Atgal</a> </h4>
         </div>
     </div>
 </div>

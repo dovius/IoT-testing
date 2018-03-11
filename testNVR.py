@@ -5,7 +5,7 @@ import time
 import config
 from datetime import datetime as dt
 
-db = MySQLdb.connect(config.dbHost, 'root', config.dbPassword,'NVR')
+db = MySQLdb.connect(config.dbHost, 'root', config.dbPassword, config.dbTable)
 cursor = db.cursor()
 
 def refresh():
@@ -45,10 +45,16 @@ def setup():
             time DATETIME,
             status TINYINT(1))"""
 
+    sql3 = """CREATE TABLE CONF (
+            time DATETIME)"""
+
     cursor.execute('DROP TABLE IF EXISTS NVR')
     cursor.execute('DROP TABLE IF EXISTS EVENT')
+    cursor.execute('DROP TABLE IF EXISTS CONF')
     cursor.execute(sql)
     cursor.execute(sql2)
+    cursor.execute(sql3)
+    cursor.execute('insert into CONF (time) VALUES (NOW())')
 
 for arg in sys.argv:
     if arg == 'refresh':
@@ -56,6 +62,7 @@ for arg in sys.argv:
     if arg == 'setup':
         setup()
         refresh()
+
 
 sqlSelect2 = 'SELECT * FROM NVR'
 cursor.execute(sqlSelect2)
@@ -86,14 +93,18 @@ for row in results:
             if dateOnUntil <= dateOffUntil:
                 cursor.execute('UPDATE NVR SET on_until_date=%s WHERE id=%s', \
                                (nowTime, row[0]))
+                cursor.execute('INSERT INTO EVENT (id, time, status) VALUES (%s, %s, %s)', \
+                               (row[0], nowTime, status))
         else:
             if dateOnUntil >= dateOffUntil:
                 cursor.execute('UPDATE NVR SET off_until_date=%s WHERE id=%s', \
                                (nowTime, row[0]))
-
-        cursor.execute('INSERT INTO EVENT (id, time, status) VALUES (%s, %s, %s)', \
-                       (row[0], nowTime, status))
+                cursor.execute('INSERT INTO EVENT (id, time, status) VALUES (%s, %s, %s)', \
+                               (row[0], nowTime, status))
         db.commit()
     except MySQLdb.Error, e:
         print str(e)
         db.rollback()
+
+cursor.execute('update CONF set time = NOW() LIMIT 1')
+db.commit()
