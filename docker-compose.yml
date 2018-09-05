@@ -1,0 +1,23 @@
+version: '2'
+services:
+  app:
+    build: .
+    command: sh /app/startup.sh
+    ports:
+     - "8080:8080"
+    volumes:
+     - .:/app
+    depends_on:
+     - db
+    hostname: appserver
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro

@@ -2,16 +2,20 @@ from datetime import datetime
 from flask import Flask, render_template, json, request, redirect, url_for, flash
 from flaskext.mysql import MySQL
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
-import config
 import time
 import subprocess
+import sys
 
 mysql = MySQL()
 app = Flask(__name__)
-app.config['MYSQL_DATABASE_USER'] = config.dbUser
-app.config['MYSQL_DATABASE_PASSWORD'] = config.dbPassword
-app.config['MYSQL_DATABASE_DB'] = config.dbTable
-app.config['MYSQL_DATABASE_HOST'] = config.dbHost
+app.config['MYSQL_DATABASE_USER'] = "root"
+app.config['MYSQL_DATABASE_DB'] = "NVR"
+app.config['MYSQL_DATABASE_HOST'] = "db"
+
+if len(sys.argv) > 1 and sys.argv[1] == 'debug':
+    app.config['MYSQL_DATABASE_PORT'] = 32000
+    app.config['MYSQL_DATABASE_HOST'] = "127.0.0.1"
+
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 mysql.init_app(app)
 
@@ -83,7 +87,11 @@ def main():
     cursor = conn.cursor()
     cursor.execute('SELECT time FROM EVENT ORDER BY time LIMIT 1')
     initTimeDb = cursor.fetchall()
-    initTime = initTimeDb[0][0]
+    if len(initTimeDb) == 0:
+        cursor.execute('SELECT * FROM CONF')
+        initTime = cursor.fetchall()[0][0]
+    else:
+        initTime = initTimeDb[0][0]
     deviceInitTimeStr = '2010-01-01 01:01:01'
     deviceInitTime = datetime.strptime(deviceInitTimeStr, '%Y-%m-%d %H:%M:%S')
     cursor.execute('SELECT * FROM NVR')
@@ -125,4 +133,6 @@ def main():
 
 
 if __name__ == "__main__":
-    app.run(host=config.localhost, port=config.localport)
+    if len(sys.argv) > 1 and sys.argv[1] == 'debug':
+        app.run(host="0.0.0.0", port=8081)
+    app.run(host="0.0.0.0", port=8080, debug=True)
