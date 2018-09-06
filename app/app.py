@@ -1,27 +1,42 @@
 from datetime import datetime
 from flask import Flask, render_template, json, request, redirect, url_for, flash
+from errors.handlers import errors
+from controllers.nvr import nvr
 from flaskext.mysql import MySQL
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 import time
 import subprocess
 import sys
 
-mysql = MySQL()
 app = Flask(__name__)
+
+app.register_blueprint(errors)
+app.register_blueprint(nvr)
+
 app.config['MYSQL_DATABASE_USER'] = "root"
 app.config['MYSQL_DATABASE_DB'] = "NVR"
 app.config['MYSQL_DATABASE_HOST'] = "db"
+app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
 if len(sys.argv) > 1 and sys.argv[1] == 'debug':
     app.config['MYSQL_DATABASE_PORT'] = 32000
     app.config['MYSQL_DATABASE_HOST'] = "127.0.0.1"
 
-app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
+mysql = MySQL()
 mysql.init_app(app)
 
 class ReusableForm(Form):
     name = TextField('Pavadinimas:', validators=[validators.required()])
     ipAddress = TextField('IP adresas:', validators=[validators.required()])
+
+
+
+
+
+
+
+
+
 
 @app.route('/ref')
 def ref():
@@ -134,5 +149,5 @@ def main():
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == 'debug':
-        app.run(host="0.0.0.0", port=8081)
+        app.run(host="0.0.0.0", port=8081, debug=True)
     app.run(host="0.0.0.0", port=8080, debug=True)

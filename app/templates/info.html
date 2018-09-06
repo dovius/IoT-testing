@@ -1,154 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>NVR status</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "layout.html" %}
 
-    <link rel="icon" href="http://www.androidpolice.com/wp-content/uploads/2015/05/nexus2cee_tinyCam-Thumb.png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-
-    <style>
-        /* Space out content a bit */
-        body {
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        /* Everything but the jumbotron gets side spacing for mobile first views */
-        .header,
-        .marketing,
-        .footer {
-            padding-right: 15px;
-            padding-left: 15px;
-        }
-
-        /* Custom page header */
-        .header {
-            padding-bottom: 20px;
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        /* Make the masthead heading the same height as the navigation */
-        .header h3 {
-            margin-top: 0;
-            margin-bottom: 0;
-            line-height: 40px;
-        }
-
-        .table > tbody > tr > td, .table > tbody > tr > th {
-            line-height: 0.5 !important;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* Custom page footer */
-        .footer {
-            padding-top: 19px;
-            color: #777;
-            border-top: 1px solid #e5e5e5;
-        }
-
-        .container-narrow > hr {
-            margin: 30px 0;
-        }
-
-        /* Main marketing message and sign up button */
-        .jumbotron {
-            text-align: center;
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .jumbotron .btn {
-            padding: 14px 24px;
-            font-size: 21px;
-        }
-
-        /* Supporting marketing content */
-        .marketing {
-            margin: 40px 0;
-        }
-
-        .marketing p + h4 {
-            margin-top: 28px;
-        }
-
-        /*!* Responsive: Portrait tablets and up *!*/
-        /*@media screen and (min-width: 768px) {*/
-            /*!* Remove the padding we set earlier *!*/
-            /*.header,*/
-            /*.marketing,*/
-            /*.footer {*/
-                /*padding-right: 0;*/
-                /*padding-left: 0;*/
-            /*}*/
-
-            .container {
-                max-width: 730px;
-            }
-
-            /*.container {*/
-                /*background-color: black;*/
-            /*}*/
-
-            /*.header {*/
-                /*margin-bottom: 30px;*/
-            /*}*/
-
-            /*.jumbotron {*/
-                /*border-bottom: 0;*/
-            /*}*/
-        /*}*/
-
-        @media only screen and (max-width: 800px) {
-            /* Remove the padding we set earlier */
-            .header,
-            .marketing,
-            .footer {
-                padding-right: 0;
-                padding-left: 0;
-            }
-
-
-            .container {
-                /*background-color: black;*/
-            }
-
-            .header {
-                margin-bottom: 30px;
-            }
-
-            .jumbotron {
-                border-bottom: 0;
-            }
-        }
-
-    </style>
-</head>
-<body>
-<div class="container">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">NVR</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li><a href="/">Kamerų sąrašas</a></li>
-                <li><a href="/insert">Pridėti kamerą</a></li>
-                <li><a href="#">Atsijungti</a></li>
-            </ul>
-        </div>
-    </nav>
+{% block content %}
     <div class="row">
         <div class="col">
-            <h1>{{info.name}}</h1>
+            <h1>{{ info.name }}</h1>
             <table class="table table-inverse">
                 <thead>
                 <tr>
@@ -160,24 +15,18 @@
 
                 {% for log in info.logs %}
                     <tr>
-
-                        <td {% if not log[1] %} style="color:red" {% endif %}>{{log[0]}}</td>
+                        <td {% if not log[1] %} style="color:red" {% endif %}>{{ log[0] }}</td>
                         <td {% if not log[1] %} style="color:red" {% endif %}>{% if log[1] %}
-                                Isijunge
-                            {% else %}
-                                Issiunge
-                            {% endif %}
+                            Isijunge
+                        {% else %}
+                            Issiunge
+                        {% endif %}
                         </td>
-
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <h4><a href="/">Atgal</a> </h4>
+            <h4><a href="/">Atgal</a></h4>
         </div>
     </div>
-</div>
-
-
-</body>
-</html>
+{% endblock content %}

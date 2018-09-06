@@ -4,7 +4,7 @@ WORKDIR /app/
 
 RUN apt-get -y update && \
     apt-get install -y libmysqlclient-dev cron
-RUN pip install -r requirements.txt
+RUN pip install -r app/requirements.txt
 
 RUN touch cron.log
 RUN crontab crontab
