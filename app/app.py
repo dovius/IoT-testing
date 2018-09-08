@@ -1,9 +1,9 @@
 from datetime import datetime
 from flask import Flask, render_template, json, request, redirect, url_for, flash
+from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from errors.handlers import errors
 from controllers.nvr import nvr
 from flaskext.mysql import MySQL
-from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 import time
 import subprocess
 import sys
@@ -16,7 +16,6 @@ app.register_blueprint(nvr)
 app.config['MYSQL_DATABASE_USER'] = "root"
 app.config['MYSQL_DATABASE_DB'] = "NVR"
 app.config['MYSQL_DATABASE_HOST'] = "db"
-app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
 if len(sys.argv) > 1 and sys.argv[1] == 'debug':
     app.config['MYSQL_DATABASE_PORT'] = 32000
@@ -28,15 +27,6 @@ mysql.init_app(app)
 class ReusableForm(Form):
     name = TextField('Pavadinimas:', validators=[validators.required()])
     ipAddress = TextField('IP adresas:', validators=[validators.required()])
-
-
-
-
-
-
-
-
-
 
 @app.route('/ref')
 def ref():
@@ -95,6 +85,23 @@ def insert():
         else:
             flash('All the form fields are required. ')
     return render_template('insert.html', form=form)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route("/")
 def main():

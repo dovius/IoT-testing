@@ -8,6 +8,7 @@ import time
 db = MySQLdb.connect(host="db", user='root', db="NVR")
 cursor = db.cursor()
 
+
 # mongoClient = MongoClient('localhost', 27017)
 # mongoDb = mongoClient['iot-app']
 

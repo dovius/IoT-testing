@@ -14,8 +14,8 @@
                 {% for device in devices %}
                     <tr>
                         <td {% if not device.status %} style="color:red" {% endif %}>
-                            <a href="/nvr/{{ device.id }}">{{ device.name }}</a> <a href="/delete/{{ device.id }}"
-                                                                                    style="color: black"><i
+                            <a href="/event/{{ device.id }}">{{ device.name }}</a> <a href="/delete/{{ device.id }}"
+                                                                                      style="color: black"><i
                                 class="fa fa-remove"></i></a>
                         </td>
                         <td {% if not device.status %} style="color:red" {% endif %}>
@@ -39,6 +39,11 @@
                 <tr>
                     <td><a href="/ref">Atnaujinti</a></td>
                     <td>{{ info.refreshTime }} paskutinis atnaujinimas</td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td><a href="/insert">Prideti</a></td>
+                    <td/>
                     <td/>
                 </tr>
             </table>
