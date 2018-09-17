@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="login-form">
+        <form action="/login" method="post">
+            {{ form.csrf }}
+            <h2 class="text-center">Prisijungti</h2>
+            <div class="form-group">
+                <input type="text" id="password" name="password" class="form-control" placeholder="Password" required="required">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Prisijungti</button>
+            </div>
+            <div class="clearfix">
+                <label class="pull-left checkbox-inline"><input type="checkbox" id="remember" name="remember"> Prisiminti</label>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

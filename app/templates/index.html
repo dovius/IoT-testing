@@ -14,9 +14,7 @@
                 {% for device in devices %}
                     <tr>
                         <td {% if not device.status %} style="color:red" {% endif %}>
-                            <a href="/event/{{ device.id }}">{{ device.name }}</a> <a href="/delete/{{ device.id }}"
-                                                                                      style="color: black"><i
-                                class="fa fa-remove"></i></a>
+                            <a href="/event/{{ device.id }}">{{ device.name }}</a>
                         </td>
                         <td {% if not device.status %} style="color:red" {% endif %}>
                             {% if device.offTimeDiffDays > 565 %}
@@ -30,7 +28,7 @@
                     </tr>
                 {% endfor %}
             </table>
-            <table class="table table-inverse">
+            <table class="table table-inverse desktop-table">
                 <tr>
                     <td>{{ info.onDevices }} / {{ info.allDevices }} veikiantys NVR</td>
                     <td>{{ info.initTime }} pradzios laikas</td>
@@ -45,6 +43,23 @@
                     <td><a href="/insert">Prideti</a></td>
                     <td/>
                     <td/>
+                </tr>
+            </table>
+            <table class="table table-inverse mobile-table">
+                <tr>
+                    <td>{{ info.onDevices }} / {{ info.allDevices }} veikiantys NVR</td>
+                </tr>
+                <tr>
+                    <td>{{ info.runningTimeDays }}d {{ info.runningTimeHours }}h programa vykdoma</td>
+                </tr>
+                <tr>
+                    <td>{{ info.refreshTime }} paskutinis atnaujinimas</td>
+                </tr>
+                <tr>
+                    <td><a href="/insert">Prideti</a></td>
+                </tr>
+                <tr>
+                    <td><a href="/ref">Atnaujinti</a></td>
                 </tr>
             </table>
         </div>

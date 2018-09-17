@@ -8,6 +8,9 @@ CREATE TABLE NVR (
             add_date DATE,
             on_until_date DATETIME,
             off_until_date DATETIME,
+            ports VARCHAR(40),
+            password VARCHAR(40),
+            internal VARCHAR(40),
             PRIMARY KEY (id));
 
 CREATE TABLE EVENT (

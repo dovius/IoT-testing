@@ -1,30 +1,45 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <div class="row">
+    <div class="row top-buffer">
         <div class="col">{% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message[1] }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
         {% endwith %}
             <form action="" method="post">
                 {{ form.csrf }}
-
-                <div class="input text">
-                    {{ form.name.label }} {{ form.name }}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Pavadinimas</label>
+                        <input id="name" name="name" required="" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ipAddress">IP adresas</label>
+                        <input id="ipAddress" name="ipAddress" required="" type="text" class="form-control">
+                    </div>
                 </div>
-
-                <div class="input text">
-                    {{ form.ipAddress.label }} {{ form.ipAddress }}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ports">Portai</label>
+                        <input id="ports" name="ports" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="password">Slaptazodis</label>
+                        <input id="password" name="password" type="text" class="form-control">
+                    </div>
                 </div>
-
-                <div class="input submit">
-                    <input type="submit" value="Pridėti"/>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="internal">Vidinis IP adresas</label>
+                        <input id="internal" name="internal" type="text" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6" style="visibility: hidden;">
+                                            <div class="form-group col-md-6">
+                        <label for="internal">Vidinis IP adresas</label>
+                        <input id="internal" name="internal" type="text" class="form-control">
+                    </div>
+                    </div>
                 </div>
+                <button type="submit" class="btn btn-primary" style="margin-left: 15px">Atnaujinti</button>
+                <h4 class="spaced"><a href="/">Atgal</a></h4>
             </form>
         </div>
     </div>

@@ -1,9 +1,65 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
     <div class="row">
         <div class="col">
-            <h1>{{ info.name }}</h1>
+            <h1 class="spaced">{{ info.name }} <a href="/delete/{{ nvrInfo.id }}" style="color: black"><i class="fa fa-remove"></i></a>
+                <i style="cursor: pointer;" onclick="makeAlert()" class="fa fa-edit"></i>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">{% with messages = get_flashed_messages(with_categories=true) %}
+        {% endwith %}
+            <form action="" method="post" style="display: none">
+                {{ form.csrf }}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Pavadinimas</label>
+                        <input id="name" name="name" required="" type="text" value="{{ nvrInfo.name }}"
+                               class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ipAddress">IP adresas</label>
+                        <input id="ipAddress" name="ipAddress" required="" type="text" value="{{ nvrInfo.ip }}"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="ports">Portai</label>
+                        <input id="ports" name="ports" type="text" value="{{ nvrInfo.ports }}" class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="password">Slaptazodis</label>
+                        <input id="password" name="password" type="text" value="{{ nvrInfo.password }}"
+                               class="form-control">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="internal">Vidinis IP adresas</label>
+                        <input id="internal" name="internal" type="text" value="{{ nvrInfo.internal }}"
+                               class="form-control">
+                    </div>
+                    <div class="form-group col-md-6" style="visibility: hidden;">
+                        <div class="form-group col-md-6">
+                            <label for="internal">Vidinis IP adresas</label>
+                            <input id="internal" name="internal" type="text" value="{{ nvrInfo.internal }}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-left: 15px">Atnaujinti</button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
             <table class="table table-inverse">
                 <thead>
                 <tr>
@@ -12,11 +68,10 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 {% for log in info.logs %}
                     <tr>
                         <td {% if not log[1] %} style="color:red" {% endif %}>{{ log[0] }}</td>
-                        <td {% if not log[1] %} style="color:red" {% endif %}>{% if log[1] %}
+                        <td {% if not log[1] %} style=" color:red" {% endif %}>{% if log[1] %}
                             Isijunge
                         {% else %}
                             Issiunge
@@ -26,7 +81,11 @@
                 {% endfor %}
                 </tbody>
             </table>
-            <h4><a href="/">Atgal</a></h4>
+            <h4 class="spaced"><a href="/">Atgal</a></h4>
         </div>
     </div>
+
+    <script>
+        $(".target").toggle();
+    </script>
 {% endblock content %}

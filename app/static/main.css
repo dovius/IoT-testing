@@ -1,7 +1,8 @@
-/* Space out content a bit */
-body {
-    padding-top: 10px;
-    padding-bottom: 10px;
+html, body {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -63,7 +64,6 @@ body {
     margin-top: 28px;
 }
 
-
 .container {
     max-width: 730px;
 }
@@ -80,24 +80,56 @@ a {
     text-decoration: none;
 }
 
-@media only screen and (max-width: 800px) {
-    /* Remove the padding we set earlier */
-    .header,
-    .marketing,
-    .footer {
-        padding-right: 0;
-        padding-left: 0;
+.spaced {
+    padding-left: 15px;
+}
+
+.top-buffer {
+    margin-top: 20px;
+}
+
+@media only screen and (max-device-width: 800px) {
+    .mobile-table {
+        display: table;
     }
 
-    .container {
-        /*background-color: black;*/
+    .desktop-table {
+        display: none;
+    }
+}
+
+@media only screen and (min-device-width: 801px) {
+    .mobile-table {
+        display: none;
     }
 
-    .header {
-        margin-bottom: 30px;
+    .desktop-table {
+        display: table;
     }
+}
 
-    .jumbotron {
-        border-bottom: 0;
-    }
+.login-form {
+    width: 340px;
+    margin: 50px auto;
+}
+
+.login-form form {
+    margin-bottom: 15px;
+    background: #f7f7f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+}
+
+.login-form h2 {
+    margin: 0 0 15px;
+}
+
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 2px;
+}
+
+.btn {
+    font-size: 15px;
+    font-weight: bold;
 }

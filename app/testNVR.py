@@ -5,7 +5,7 @@ import requests
 import MySQLdb
 import time
 
-db = MySQLdb.connect(host="db", user='root', db="NVR")
+db = MySQLdb.connect(host="db", user='root', db="NVR", port=3306)
 cursor = db.cursor()
 
 
@@ -21,9 +21,9 @@ def refresh():
     results = cursor.fetchall()
     ipList = [result[0] for result in results]
 
-    f = open('NVR.txt', 'r')
+    f = open('app/NVR.txt', 'r')
     for line in f:
-        ip, name = line.split(',')
+        ip, name, ports, password, internal, = line.split(',')
         name = name.replace('\n', '')
         if ip not in ipList:
             try:
@@ -31,11 +31,11 @@ def refresh():
                 nowDate = time.strftime('%Y-%m-%d')
                 nowTime = time.strftime('%Y-%m-%d %H:%M:%S')
                 cursor.execute(
-                    'INSERT INTO NVR (ip, name, add_date, off_until_date, on_until_date) VALUES (%s, %s, %s, %s, %s)', \
-                    (ip, name, nowDate, nowTime, '2010-01-01 01:01:01'))
+                    'INSERT INTO NVR (ip, name, add_date, off_until_date, on_until_date, ports, password, internal) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)', \
+                    (ip, name, nowDate, nowTime, '2010-01-01 01:01:01', ports, password, internal))
                 db.commit()
-            except:
-                print 'db error on init'
+            except MySQLdb.Error, e:
+                print str(e)
                 db.rollback()
 
 

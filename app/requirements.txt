@@ -4,3 +4,4 @@ flask-mysql
 Flask-WTF
 requests
 MySQL-python
+flask-login
