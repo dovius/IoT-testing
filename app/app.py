@@ -21,7 +21,7 @@ if len(sys.argv) > 1 and sys.argv[1] == 'debug':
     app.config['MYSQL_DATABASE_PORT'] = 32000
     app.config['MYSQL_DATABASE_HOST'] = "127.0.0.1"
 
-mysql = MySQL()
+mysql = MySQL(autocommit=True)
 mysql.init_app(app)
 
 class ReusableForm(Form):
