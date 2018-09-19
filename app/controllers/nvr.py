@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, session,  make_response
 from . import LoginForn, login_required
 import subprocess
+import datetime
 
 from app.models.Nvr import Nvr
 from app.models.Event import Event
@@ -22,7 +23,7 @@ def login():
                 return redirect(url_for('nvr.get_nvr'))
             else:
                 resp = make_response(redirect(url_for('nvr.get_nvr')))
-                resp.set_cookie('login', 'admin')
+                resp.set_cookie('login', value='admin', expires=datetime.datetime.now() + datetime.timedelta(days=365))
                 return resp
         else:
             return render_template('login.html', form=form)
@@ -70,7 +71,7 @@ def delete(id):
 @login_required
 def ref():
     subprocess.call(['python', 'testNVR.py'])
-    return redirect(url_for('main'))
+    return redirect(url_for('nvr.get_nvr'))
 
 @nvr.route('/logout')
 @login_required

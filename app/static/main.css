@@ -96,6 +96,10 @@ a {
     .desktop-table {
         display: none;
     }
+
+    .login-form {
+        margin: 50px auto;
+    }
 }
 
 @media only screen and (min-device-width: 801px) {
@@ -106,11 +110,11 @@ a {
     .desktop-table {
         display: table;
     }
-}
 
-.login-form {
-    width: 340px;
-    margin: 50px auto;
+    .login-form {
+        width: 340px;
+        margin: 50px auto;
+    }
 }
 
 .login-form form {
