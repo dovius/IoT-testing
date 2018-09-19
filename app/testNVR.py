@@ -4,6 +4,8 @@ import sys
 import requests
 import MySQLdb
 import time
+import socket
+import datetime
 
 db = MySQLdb.connect(host="db", user='root', db="NVR", port=3306)
 cursor = db.cursor()
@@ -11,9 +13,28 @@ cursor = db.cursor()
 
 # mongoClient = MongoClient('localhost', 27017)
 # mongoDb = mongoClient['iot-app']
-
-
 # collection = db['nvrCollection']
+
+def isOpen(ip,port):
+   s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+   try:
+      s.settimeout(3)
+      s.connect((ip, int(port)))
+      s.shutdown(2)
+      return True
+   except:
+      return False
+
+
+def is200(ip, port):
+   try:
+       r = requests.get('http://' + ip, timeout=(3, 3))
+       if r.status_code == 200:
+           return True
+       return False
+   except Exception:
+       return False
+
 
 def refresh():
     sqlSelect = 'SELECT ip FROM NVR'
@@ -113,13 +134,15 @@ def mysqlScan():
         if dateOffUntil is None:
             dateOffUntil = 'NULL'
 
-        try:
-            r = requests.get('http://' + ip, verify=False, timeout=3)
-            print name + ' -> ' + 'Connected'
-            status = True
-        except:
-            print name + ' -> ' + ' -'
-            status = False
+        print '[' + str(datetime.datetime.now()) + '] ' + name + ' ',
+        is200resp = is200(ip, 80)
+        isOpenResp = isOpen(ip, 8000)
+        status = is200resp or isOpenResp
+        if is200resp:
+            print '80',
+        if isOpenResp:
+            print '8000',
+        print ' '
         try:
             if status == True:
                 if dateOnUntil <= dateOffUntil:
