@@ -237,3 +237,5 @@ for arg in sys.argv:
 
 mysqlScan()
 # mongoScan()
+
+db.close()

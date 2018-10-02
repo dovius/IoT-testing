@@ -1,11 +1,10 @@
-from . import cursor, db
+from . import db
 
 class Event:
 
     @staticmethod
     def get_event(id):
-        cursor.execute('SELECT * FROM EVENT WHERE ID = %s', (id,))
-        logsDb = cursor.fetchall()
+        logsDb = db.query('SELECT * FROM EVENT WHERE ID = %s', (id,)).fetchall()
         logs = []
 
         for log in logsDb:
@@ -14,8 +13,7 @@ class Event:
             info.append(log[2])
             logs.append(info)
 
-        cursor.execute('SELECT name FROM NVR WHERE id = %s', (id,))
-        name = cursor.fetchall()[0][0]
+        name = db.query('SELECT name FROM NVR WHERE id = %s', (id,)).fetchall()[0][0]
 
         info = {
             'name': name,
