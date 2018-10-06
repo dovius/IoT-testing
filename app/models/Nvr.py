@@ -36,8 +36,8 @@ class Nvr:
             if timeDiff.days > 500:
                 deviceEntity['timeDiff'] = -1
             devices.append(deviceEntity)
-        devices = sorted(devices, key = lambda i: (i['name']))
-        devices = sorted(devices, key = lambda i: (i['timeDiff'], i['status']),reverse=True)
+        # devices = sorted(devices, key = lambda i: (i['name']))
+        devices = sorted(devices, key = lambda i: (i['status'], i['timeDiff']),reverse=True)
         return devices
 
     @staticmethod

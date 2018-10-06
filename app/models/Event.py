@@ -4,7 +4,7 @@ class Event:
 
     @staticmethod
     def get_event(id):
-        logsDb = db.query('SELECT * FROM EVENT WHERE ID = %s', (id,)).fetchall()
+        logsDb = db.query('SELECT * FROM EVENT WHERE ID = %s ORDER BY time DESC', (id,)).fetchall()
         logs = []
 
         for log in logsDb:

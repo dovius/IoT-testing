@@ -134,15 +134,23 @@ def mysqlScan():
         if dateOffUntil is None:
             dateOffUntil = 'NULL'
 
-        print '[' + str(datetime.datetime.now()) + '] ' + name + ' ',
-        is200resp = is200(ip, 80)
-        isOpenResp = isOpen(ip, 8000)
-        status = is200resp or isOpenResp
-        if is200resp:
-            print '80',
-        if isOpenResp:
-            print '8000',
-        print ' '
+        retryTimes = 1
+        status = False
+        if dateOnUntil > dateOffUntil:
+            retryTimes = 6
+
+        for i in range(retryTimes):
+            print '[' + str(datetime.datetime.now()) + '] ' + name + ' ',
+            is200resp = is200(ip, 80)
+            isOpenResp = isOpen(ip, 8000)
+            status = status or is200resp or isOpenResp
+            if is200resp:
+                print '80',
+            if isOpenResp:
+                print '8000',
+            print ' '
+            if status:
+                break
         try:
             if status == True:
                 if dateOnUntil <= dateOffUntil:
@@ -226,6 +234,19 @@ def mysqlScan():
 #
 #     mongoDb.confCollection.update({}, {'$set': {'time': time.strftime('%Y-%m-%d %H:%M:%S')}})
 
+
+def backupData():
+    backup = open('../../backup.txt', 'w+')
+    # backup = open('backup.txt', 'w+')
+
+    cursor.execute('SELECT * FROM NVR')
+    nvrs = cursor.fetchall()
+    for nvr in nvrs:
+        backup.write(nvr[1] + ',' + nvr[2] + ',' + nvr[6] + ',' + nvr[7] + ',' + nvr[8])
+        if not nvr[8].endswith('\n'):
+            backup.write('\n')
+    backup.close()
+
 for arg in sys.argv:
     if arg == 'refresh':
         refresh()
@@ -234,6 +255,8 @@ for arg in sys.argv:
         setup()
         refresh()
         # mongoRefresh()
+
+backupData()
 
 mysqlScan()
 # mongoScan()
