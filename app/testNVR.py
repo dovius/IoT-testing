@@ -6,6 +6,7 @@ import MySQLdb
 import time
 import socket
 import datetime
+import os
 
 db = MySQLdb.connect(host="db", user='root', db="NVR", port=3306)
 cursor = db.cursor()
@@ -236,7 +237,7 @@ def mysqlScan():
 
 
 def backupData():
-    backup = open('../../backup.txt', 'w+')
+    backup = open(os.path.expanduser('~') + '/backup.txt', 'w+')
     # backup = open('backup.txt', 'w+')
 
     cursor.execute('SELECT * FROM NVR')
@@ -257,8 +258,6 @@ for arg in sys.argv:
         # mongoRefresh()
 
 backupData()
-
 mysqlScan()
-# mongoScan()
-
 db.close()
+# mongoScan()
