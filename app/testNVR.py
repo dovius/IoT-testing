@@ -237,7 +237,7 @@ def mysqlScan():
 
 
 def backupData():
-    backup = open(os.path.expanduser('~') + '/backup.txt', 'w+')
+    backup = open('/app/backup.txt', 'w+')
     # backup = open('backup.txt', 'w+')
 
     cursor.execute('SELECT * FROM NVR')
